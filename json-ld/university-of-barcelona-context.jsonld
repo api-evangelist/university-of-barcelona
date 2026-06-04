@@ -1,0 +1,102 @@
+{
+  "@context": {
+    "schema": "https://schema.org/",
+    "ub": "https://www.ub.edu/ns/vocab#",
+    "dspace": "https://diposit.ub.edu/ns/vocab#",
+    "oai": "http://www.openarchives.org/OAI/2.0/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+
+    "Institution": "schema:CollegeOrUniversity",
+    "name": "schema:name",
+    "alternateName": "schema:alternateName",
+    "description": "schema:description",
+    "url": "schema:url",
+    "foundingDate": {
+      "@id": "schema:foundingDate",
+      "@type": "xsd:date"
+    },
+    "location": "schema:location",
+    "sameAs": {
+      "@id": "schema:sameAs",
+      "@type": "@id"
+    },
+
+    "API": "schema:WebAPI",
+    "documentation": {
+      "@id": "schema:documentation",
+      "@type": "@id"
+    },
+    "endpointUrl": {
+      "@id": "schema:url",
+      "@type": "@id"
+    },
+
+    "DigitalRepository": "dspace:DigitalRepository",
+    "dspaceVersion": "dspace:version",
+    "repositoryName": "oai:repositoryName",
+    "protocolVersion": "oai:protocolVersion",
+    "earliestDatestamp": {
+      "@id": "oai:earliestDatestamp",
+      "@type": "xsd:dateTime"
+    },
+
+    "Community": "dspace:Community",
+    "Collection": "dspace:Collection",
+    "Item": "dspace:Item",
+    "Bitstream": "dspace:Bitstream",
+    "Bundle": "dspace:Bundle",
+    "communities": {
+      "@id": "dspace:communities",
+      "@type": "@id"
+    },
+    "collections": {
+      "@id": "dspace:collections",
+      "@type": "@id"
+    },
+    "items": {
+      "@id": "dspace:items",
+      "@type": "@id"
+    },
+    "bitstreams": {
+      "@id": "dspace:bitstreams",
+      "@type": "@id"
+    },
+    "metadata": "dspace:metadata",
+    "uuid": "dspace:uuid",
+    "handle": "dspace:handle"
+  },
+  "@type": "Institution",
+  "name": "University of Barcelona",
+  "alternateName": "Universitat de Barcelona",
+  "description": "Public research university founded in 1450 and based in Barcelona, Catalonia, Spain. Operates the Dipòsit Digital institutional repository (DSpace 7.6.6) exposing a public REST/HAL API and an OAI-PMH metadata-harvesting endpoint.",
+  "url": "https://www.ub.edu/",
+  "foundingDate": "1450",
+  "sameAs": [
+    "https://www.linkedin.com/school/university-of-barcelona/",
+    "https://www.wikidata.org/wiki/Q201492"
+  ],
+  "schema:owns": [
+    {
+      "@type": "API",
+      "name": "Dipòsit Digital REST API (DSpace 7)",
+      "endpointUrl": "https://diposit.ub.edu/server/api",
+      "documentation": "https://diposit.ub.edu/server/api",
+      "dspaceVersion": "DSpace 7.6.6",
+      "repositoryName": "Dipòsit Digital de la Universitat de Barcelona"
+    },
+    {
+      "@type": "API",
+      "name": "Dipòsit Digital OAI-PMH",
+      "endpointUrl": "https://diposit.ub.edu/server/oai/request",
+      "documentation": "https://diposit.ub.edu/server/oai/request?verb=Identify",
+      "protocolVersion": "2.0",
+      "earliestDatestamp": "2006-03-06T12:49:03Z"
+    },
+    {
+      "@type": "API",
+      "name": "UB Centralized SSO (SAML 2.0 / CAS)",
+      "endpointUrl": "https://sso.ub.edu/SAML2/SSOService.php",
+      "documentation": "https://www.ub.edu/portal/web/iub/detallservei/-/recurs/1051544/autenticacio-centralitzada-sso-"
+    }
+  ]
+}

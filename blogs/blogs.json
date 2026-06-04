@@ -1,0 +1,14 @@
+{
+  "repo": "university-of-barcelona",
+  "feeds": [
+    {
+      "source": "https://www.ub.edu/",
+      "feed_url": "https://www.ub.edu/web/actualitat/",
+      "title": "University of Barcelona - Actualitat (News)",
+      "saved": 0,
+      "method": "none"
+    }
+  ],
+  "post_count": 0,
+  "fetched": "2026-06-03T00:00:00Z"
+}
