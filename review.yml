@@ -1,0 +1,41 @@
+---
+name: University of Barcelona
+description: University of Barcelona public developer/API footprint review for APIs.json cataloging.
+url: https://raw.githubusercontent.com/api-evangelist/university-of-barcelona/refs/heads/main/review.yml
+created: '2026-06-03'
+modified: '2026-06-03'
+reviews:
+  - date: '2026-06-03'
+    rating: 2
+    summary: >-
+      No central branded developer portal and no confirmed official
+      organization-wide GitHub account were found for the University of
+      Barcelona; only course/research repos exist. The confirmed public API
+      footprint is library/scholarly infrastructure: the Dipòsit Digital
+      institutional repository on DSpace 7.6.6 exposes a live REST API and a
+      live OAI-PMH endpoint. Centralized SSO (SAML 2.0 / CAS) is live but
+      gated to registered institutional applications. The transparency open-data
+      page returned 403 to automated fetching. All listed endpoints were probed
+      live; nothing was fabricated.
+    endpoints:
+      - url: https://diposit.ub.edu/server/api
+        status: 200
+        note: DSpace 7.6.6 REST API root; returns repository version metadata and HAL links.
+      - url: https://diposit.ub.edu/server/oai/request?verb=Identify
+        status: 200
+        note: OAI-PMH Identify returns repository name and protocol metadata.
+      - url: https://diposit.ub.edu/
+        status: 200
+        note: Dipòsit Digital repository web UI.
+      - url: https://sso.ub.edu/SAML2/SSOService.php
+        status: 200
+        note: Centralized SSO SAML2 service endpoint; gated to registered apps.
+      - url: https://www.ub.edu/
+        status: 200
+        note: Official university website.
+      - url: https://web.ub.edu/en/web/transparencia/open-data
+        status: 403
+        note: Transparency open-data page; blocks automated fetching, exists in browser.
+      - url: https://identitat.ub.edu/
+        status: 0
+        note: Does not resolve; identity is served via sso.ub.edu instead.

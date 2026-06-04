@@ -1,0 +1,93 @@
+---
+aid: university-of-barcelona
+name: University of Barcelona
+description: >-
+  The University of Barcelona (Universitat de Barcelona, UB) is a public
+  research university founded in 1450 and based in Barcelona, Catalonia, Spain.
+  It is ranked #165 in the QS World University Rankings 2025. Its publicly
+  documented developer/API footprint is limited and primarily centered on
+  library and scholarly infrastructure: the Dipòsit Digital de la Universitat de
+  Barcelona runs DSpace 7.6.6, exposing a public REST API and an OAI-PMH
+  metadata-harvesting endpoint. The university also operates centralized
+  single sign-on (SSO) supporting SAML 2.0 / CAS, and publishes institutional
+  open data through its transparency portal. No central, branded public
+  developer portal or official organization-wide GitHub account was confirmed.
+type: Index
+position: Consumer
+access: 3rd-Party
+image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+url: https://raw.githubusercontent.com/api-evangelist/university-of-barcelona/refs/heads/main/apis.yml
+tags:
+  - Education
+  - Higher Education
+  - University
+  - Spain
+  - Catalonia
+  - Open Data
+  - Library
+  - Scholarly
+  - Repository
+  - DSpace
+  - OAI-PMH
+created: '2026-06-03'
+modified: '2026-06-03'
+specificationVersion: '0.19'
+apis:
+  - aid: university-of-barcelona:diposit-rest
+    name: Dipòsit Digital REST API (DSpace 7)
+    description: >-
+      Public DSpace 7.6.6 REST API for the Dipòsit Digital de la Universitat de
+      Barcelona, the institutional repository of teaching, research and
+      institutional output. The API root advertises HAL links for items,
+      collections, communities, bitstreams and authentication. Confirmed live
+      (HTTP 200) returning DSpace version metadata.
+    humanURL: https://diposit.ub.edu/
+    baseURL: https://diposit.ub.edu/server/api
+    tags: [ Repository, DSpace, Scholarly, Library, REST ]
+    properties:
+      - type: Documentation
+        url: https://diposit.ub.edu/server/api
+  - aid: university-of-barcelona:diposit-oai
+    name: Dipòsit Digital OAI-PMH
+    description: >-
+      OAI-PMH metadata-harvesting endpoint for the Dipòsit Digital de la
+      Universitat de Barcelona. The Identify verb returns the repository name
+      and OAI-PMH 2.0 metadata. Used for harvesting into aggregators and the
+      library Alma/Primo discovery layer. Confirmed live (HTTP 200).
+    humanURL: https://diposit.ub.edu/
+    baseURL: https://diposit.ub.edu/server/oai/request
+    tags: [ Repository, OAI-PMH, Scholarly, Library, Metadata ]
+    properties:
+      - type: Documentation
+        url: https://diposit.ub.edu/server/oai/request?verb=Identify
+  - aid: university-of-barcelona:sso-saml
+    name: UB Centralized SSO (SAML 2.0 / CAS)
+    description: >-
+      Universitat de Barcelona centralized single sign-on (Identificació UB)
+      providing federated authentication for university web applications.
+      Supports SAML 2.0 and CAS protocols. The SAML2 SSO service endpoint is
+      confirmed live (HTTP 200). Integration is restricted to registered
+      institutional applications; not a public open API.
+    humanURL: https://www.ub.edu/portal/web/iub/detallservei/-/recurs/1051544/autenticacio-centralitzada-sso-
+    tags: [ Authentication, SSO, SAML, Identity, CAS ]
+    properties:
+      - type: Documentation
+        url: https://www.ub.edu/portal/web/iub/detallservei/-/recurs/1051544/autenticacio-centralitzada-sso-
+common:
+  - type: Website
+    url: https://www.ub.edu/
+  - type: LinkedIn
+    url: https://www.linkedin.com/school/university-of-barcelona/
+  - type: Authentication
+    url: https://sso.ub.edu/SAML2/SSOService.php
+  - type: Plans
+    url: plans/university-of-barcelona-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/university-of-barcelona-rate-limits.yml
+  - type: FinOps
+    url: finops/university-of-barcelona-finops.yml
+  - type: Review
+    url: review.yml
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com
