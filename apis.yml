@@ -74,6 +74,8 @@ apis:
       - type: Documentation
         url: https://www.ub.edu/portal/web/iub/detallservei/-/recurs/1051544/autenticacio-centralitzada-sso-
 common:
+  - type: DomainSecurity
+    url: security/university-of-barcelona-domain-security.yml
   - type: Website
     url: https://www.ub.edu/
   - type: LinkedIn
