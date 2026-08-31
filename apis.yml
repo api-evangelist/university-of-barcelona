@@ -113,8 +113,6 @@ common:
     url: finops/university-of-barcelona-finops.yml
   - type: Review
     url: review.yml
-  - type: Blog
-    url: blogs/blogs.json
   - type: JSONLD
     url: json-ld/university-of-barcelona-context.jsonld
 maintainers:
