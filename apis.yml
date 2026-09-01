@@ -1,17 +1,27 @@
 ---
 aid: university-of-barcelona
 name: University of Barcelona
+x-type: university
+x-category: Public Research University
 description: >-
   The University of Barcelona (Universitat de Barcelona, UB) is a public
-  research university founded in 1450 and based in Barcelona, Catalonia, Spain.
-  It is ranked #165 in the QS World University Rankings 2025. Its publicly
-  documented developer/API footprint is limited and primarily centered on
-  library and scholarly infrastructure: the Dipòsit Digital de la Universitat de
-  Barcelona runs DSpace 7.6.6, exposing a public REST API and an OAI-PMH
-  metadata-harvesting endpoint. The university also operates centralized
-  single sign-on (SSO) supporting SAML 2.0 / CAS, and publishes institutional
-  open data through its transparency portal. No central, branded public
-  developer portal or official organization-wide GitHub account was confirmed.
+  research university founded in 1450 in Barcelona, Catalonia, Spain, ranked
+  #165 in the QS World University Rankings 2025. UB operates no central
+  developer portal, no public API program and no confirmed organization-wide
+  GitHub account, and its main web estate at www.ub.edu sits behind a
+  Cloudflare bot challenge that returns HTTP 403 to any automated client. What
+  it does operate is a genuine, machine-readable institutional footprint that
+  is easy to miss because none of it is marketed as an API: a SAML 2.0 identity
+  provider published through RedIRIS SIR into eduGAIN with the ub.edu attribute
+  scope; an LTI 1.3 Advantage tool platform on its self-hosted Moodle at
+  campusvirtual.ub.edu, with a live JWKS and token endpoint; an OAI-PMH 2.0
+  data provider over 100 journal sets at revistes.ub.edu; a DSpace 7.6.6
+  repository at diposit.ub.edu that was live in June 2026 and returned 503
+  across every probe on 2026-09-01; and a Crossref membership for the
+  university press. Its research-data repository and library discovery layer
+  are tenancies on consortium and vendor platforms operated by CSUC and Ex
+  Libris, not UB engineering, and are recorded here as relationships rather
+  than as UB contracts.
 type: Index
 deliveryModel:
   model: saas
@@ -41,70 +51,222 @@ access: 3rd-Party
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/university-of-barcelona.png
 url: https://raw.githubusercontent.com/api-evangelist/university-of-barcelona/refs/heads/main/apis.yml
 tags:
-  - Education
-  - Higher Education
   - University
+  - Higher Education
+  - Education
   - Spain
   - Catalonia
-  - Open Data
-  - Library
-  - Scholarly
+  - Identity Federation
+  - SAML
+  - Shibboleth
+  - eduGAIN
+  - LTI
+  - Learning Management
+  - OAI-PMH
   - Repository
   - DSpace
-  - OAI-PMH
+  - Research Data
+  - Library
+  - Scholarly
+  - Crossref
+  - Open Access
 created: '2026-06-03'
-modified: '2026-06-03'
+modified: '2026-09-01'
 specificationVersion: '0.23'
 apis:
-  - aid: university-of-barcelona:diposit-rest
-    name: Dipòsit Digital REST API (DSpace 7)
+  - aid: university-of-barcelona:ub-idp-edugain
+    name: UB SAML 2.0 Identity Provider (RedIRIS SIR / eduGAIN)
+    x-operator: federation
     description: >-
-      Public DSpace 7.6.6 REST API for the Dipòsit Digital de la Universitat de
-      Barcelona, the institutional repository of teaching, research and
-      institutional output. The API root advertises HAL links for items,
-      collections, communities, bitstreams and authentication. Confirmed live
-      (HTTP 200) returning DSpace version metadata.
-    humanURL: https://diposit.ub.edu/
-    baseURL: https://diposit.ub.edu/server/api
-    tags: [ Repository, DSpace, Scholarly, Library, REST ]
+      The University of Barcelona's own SAML 2.0 identity provider, published as
+      a signed EntityDescriptor through RedIRIS SIR — the Spanish academic
+      identity federation — and carried into eduGAIN. entityID
+      https://www.rediris.es/sir/ubidp, IDPSSODescriptor, mdui:DisplayName
+      "Universitat de Barcelona", shibmd:Scope ub.edu, registrationAuthority
+      http://www.rediris.es/. SSO and SingleLogout services are hosted for UB at
+      sir.rediris.es/ub/. A federation is shared by definition and the identity
+      behind this entry is UB's; this is the institution's strongest
+      machine-readable surface. Confirmed live 2026-09-01 (HTTP 200, text/xml,
+      10,980 bytes, validUntil 2026-10-01).
+    humanURL: https://technical.edugain.org/entities
+    baseURL: https://www.rediris.es/sir/ubidp
+    tags: [ Identity Federation, SAML, Shibboleth, eduGAIN, RedIRIS, Authentication ]
     properties:
       - type: Documentation
-        url: https://diposit.ub.edu/server/api
-  - aid: university-of-barcelona:diposit-oai
-    name: Dipòsit Digital OAI-PMH
+        url: https://www.rediris.es/sir/
+      - type: Authentication
+        url: https://www.rediris.es/sir/ubidp
+  - aid: university-of-barcelona:campusvirtual-moodle
+    name: Campus Virtual UB (Moodle) — LTI 1.3 Advantage platform and Web Services
+    x-operator: institution
     description: >-
-      OAI-PMH metadata-harvesting endpoint for the Dipòsit Digital de la
-      Universitat de Barcelona. The Identify verb returns the repository name
-      and OAI-PMH 2.0 metadata. Used for harvesting into aggregators and the
-      library Alma/Primo discovery layer. Confirmed live (HTTP 200).
-    humanURL: https://diposit.ub.edu/
-    baseURL: https://diposit.ub.edu/server/oai/request
-    tags: [ Repository, OAI-PMH, Scholarly, Library, Metadata ]
+      UB's self-hosted Moodle learning platform on the university's own host.
+      It acts as an LTI 1.3 tool platform: the JWKS at /mod/lti/certs.php serves
+      a live RS256 public key set and the LTI Advantage token endpoint at
+      /mod/lti/token.php answers an empty request with a well-formed OAuth2
+      invalid_request error, confirming the service is enabled. The Moodle Web
+      Services REST endpoint is also enabled and token-gated, returning an
+      invalidtoken exception rather than a disabled-service error. Both are real
+      institution-operated APIs; both require credentials issued by UB, so
+      neither is openly consumable. Confirmed live 2026-09-01.
+    humanURL: https://campusvirtual.ub.edu/
+    baseURL: https://campusvirtual.ub.edu/mod/lti/token.php
+    tags: [ LTI, Learning Management, Moodle, OAuth, Authentication, Education ]
+    properties:
+      - type: Authentication
+        url: https://campusvirtual.ub.edu/mod/lti/certs.php
+      - type: Documentation
+        url: https://campusvirtual.ub.edu/
+  - aid: university-of-barcelona:revistes-ojs
+    name: Revistes Científiques de la UB (OJS) — OAI-PMH 2.0
+    x-operator: institution
+    description: >-
+      Open Journal Systems platform self-hosted by UB at revistes.ub.edu,
+      publishing the university's scholarly journals. Its OAI-PMH 2.0 data
+      provider answers Identify, ListSets and ListMetadataFormats, advertising
+      repositoryName "Revistes Científiques de la Universitat de Barcelona",
+      100 sets, earliestDatestamp 2011-01-13 and adminEmail revistesub@ub.edu.
+      The OJS REST API v1 exists on the same host but returns HTTP 403
+      api.403.unauthorized without a key. The software is PKP's; the deployment,
+      the host and the content are UB's, so no OJS product contract is saved
+      under this institution. Confirmed live 2026-09-01.
+    humanURL: https://revistes.ub.edu/
+    baseURL: https://revistes.ub.edu/index.php/index/oai
+    tags: [ OAI-PMH, Scholarly, Open Access, Journals, OJS, Metadata ]
     properties:
       - type: Documentation
-        url: https://diposit.ub.edu/server/oai/request?verb=Identify
+        url: https://revistes.ub.edu/index.php/index/oai?verb=Identify
   - aid: university-of-barcelona:sso-saml
-    name: UB Centralized SSO (SAML 2.0 / CAS)
+    name: UB Centralized SSO (Identificació UB, SAML 2.0 / CAS)
+    x-operator: institution
     description: >-
-      Universitat de Barcelona centralized single sign-on (Identificació UB)
-      providing federated authentication for university web applications.
-      Supports SAML 2.0 and CAS protocols. The SAML2 SSO service endpoint is
-      confirmed live (HTTP 200). Integration is restricted to registered
-      institutional applications; not a public open API.
+      Universitat de Barcelona centralized single sign-on providing federated
+      authentication for university web applications, on UB's own host. The
+      SAML2 SSOService endpoint is confirmed live (HTTP 200, 2026-09-01);
+      no IdP metadata document is exposed at any conventional simpleSAMLphp or
+      Shibboleth path, so the machine-readable descriptor for UB's identity is
+      the RedIRIS SIR entry recorded separately above. Integration is restricted
+      to registered institutional applications; this is not a public open API.
     humanURL: https://www.ub.edu/portal/web/iub/detallservei/-/recurs/1051544/autenticacio-centralitzada-sso-
+    baseURL: https://sso.ub.edu/SAML2/SSOService.php
     tags: [ Authentication, SSO, SAML, Identity, CAS ]
     properties:
       - type: Documentation
         url: https://www.ub.edu/portal/web/iub/detallservei/-/recurs/1051544/autenticacio-centralitzada-sso-
+  - aid: university-of-barcelona:diposit-rest
+    name: Dipòsit Digital REST API (DSpace 7)
+    x-operator: institution
+    description: >-
+      DSpace 7.6.6 REST API for the Dipòsit Digital de la Universitat de
+      Barcelona, UB's institutional repository of teaching, research and
+      institutional output, on UB's own host. The API root advertised HAL links
+      for items, collections, communities, bitstreams and authentication and
+      returned HTTP 200 on 2026-06-03. On 2026-09-01 the entire diposit.ub.edu
+      host returned an Apache "503 Service Unavailable" maintenance page on
+      every probe, over both HTTP and HTTPS and across six attempts. The surface
+      is retained because it is genuinely UB's and the outage reads as
+      maintenance rather than retirement, but it is DEGRADED and must be
+      re-probed before it is credited. DSpace is open-source software UB hosts
+      itself; no DSpace product contract is saved under this institution.
+    humanURL: https://diposit.ub.edu/
+    baseURL: https://diposit.ub.edu/server/api
+    x-status: degraded
+    x-status-detail: HTTP 503 on all probes 2026-09-01; HTTP 200 on 2026-06-03.
+    tags: [ Repository, DSpace, Scholarly, Library, REST ]
+  - aid: university-of-barcelona:diposit-oai
+    name: Dipòsit Digital OAI-PMH
+    x-operator: institution
+    description: >-
+      OAI-PMH metadata-harvesting endpoint for the Dipòsit Digital de la
+      Universitat de Barcelona, used for harvesting into national aggregators
+      and the CRAI discovery layer. The Identify verb returned repository name
+      and OAI-PMH 2.0 metadata on 2026-06-03. Returned HTTP 503 on every probe
+      on 2026-09-01 along with the rest of the diposit.ub.edu host. Retained as
+      a real UB surface, marked degraded pending re-probe.
+    humanURL: https://diposit.ub.edu/
+    baseURL: https://diposit.ub.edu/server/oai/request
+    x-status: degraded
+    x-status-detail: HTTP 503 on all probes 2026-09-01; HTTP 200 on 2026-06-03.
+    tags: [ Repository, OAI-PMH, Scholarly, Library, Metadata ]
+  - aid: university-of-barcelona:cora-rdr-ub
+    name: CORA Repositori de Dades de Recerca — Universitat de Barcelona collection
+    x-operator: tenant
+    description: >-
+      UB's named research-data collection on CORA RDR, the Dataverse 6.10.1
+      instance operated by CSUC (Consorci de Serveis Universitaris de
+      Catalunya) for the Catalan university system. The collection is real and
+      it is UB's — alias UB, id 6, name "Universitat de Barcelona", affiliation
+      UB, contact crai-recerca@ub.edu, permissionRoot true — but the Dataverse
+      API contract belongs to CSUC and to the Dataverse project, not to UB, so
+      no Dataverse spec is saved here. Recorded as the tenant relationship it
+      is. The /api/ paths were reachable at the start of the 2026-09-01 run and
+      then began 302-redirecting to a CSUC Google Sites landing page under
+      request rate, which reads as a live 200 if the redirect is followed
+      blindly; the human collection URL stayed HTTP 200 throughout.
+    humanURL: https://dataverse.csuc.cat/dataverse/UB
+    baseURL: https://dataverse.csuc.cat/api/dataverses/ub
+    tags: [ Research Data, Dataverse, Repository, CSUC, Open Data ]
+    properties:
+      - type: Documentation
+        url: https://dataverse.csuc.cat/dataverse/UB
+  - aid: university-of-barcelona:cercabib-primo
+    name: Cercabib — CRAI library discovery (Ex Libris Primo VE, view 34CSUC_UB)
+    x-operator: tenant
+    description: >-
+      The CRAI library discovery layer for UB, delivered on Ex Libris Primo VE
+      under the CSUC shared Alma tenancy. The UB view is 34CSUC_UB:VU1 and it
+      resolves on a ub.edu hostname, but the platform, the contract and the
+      engineering are Ex Libris'. Recorded as UB's tenancy; the Ex Libris API
+      contracts belong in Ex Libris' own repo. Confirmed live 2026-09-01
+      (HTTP 200).
+    humanURL: https://cercabib.ub.edu/discovery/search?vid=34CSUC_UB:VU1
+    tags: [ Library, Discovery, Primo, Ex Libris, Catalog ]
+    properties:
+      - type: Documentation
+        url: https://crai.ub.edu/
+  - aid: university-of-barcelona:crossref-member
+    name: Crossref membership — Edicions de la Universitat de Barcelona (member 17854)
+    x-operator: registry
+    description: >-
+      The University of Barcelona press is a Crossref member in its own right:
+      member id 17854, DOI prefixes 10.1344 and 10.32869, 10,561 registered DOIs
+      at probe time. Crossref DOI registration is one of the `education` regime's
+      named standards and this is a verifiable fact about UB, recorded through
+      the registry's own API. The Crossref API contract is Crossref's and is not
+      saved under this institution. Confirmed live 2026-09-01 (HTTP 200).
+    humanURL: https://www.crossref.org/members/prep/17854
+    baseURL: https://api.crossref.org/members/17854
+    tags: [ Crossref, DOI, Registry, Scholarly, Open Access ]
+  - aid: university-of-barcelona:ror-registration
+    name: ROR registration — Universitat de Barcelona (021018s57)
+    x-operator: registry
+    description: >-
+      The University of Barcelona's entry in the Research Organization Registry.
+      ROR id https://ror.org/021018s57, display name "Universitat de Barcelona",
+      country ES, linking to https://web.ub.edu. Resolves to OpenAlex institution
+      I71999127. A registry membership is a fact about the institution, not a
+      contract it operates; the ROR API is ROR's. Confirmed live 2026-09-01
+      (HTTP 200).
+    humanURL: https://ror.org/021018s57
+    baseURL: https://api.ror.org/v2/organizations/021018s57
+    tags: [ ROR, Registry, Identifiers, Research ]
 common:
-  - type: DomainSecurity
-    url: security/university-of-barcelona-domain-security.yml
   - type: Website
     url: https://www.ub.edu/
   - type: LinkedIn
     url: https://www.linkedin.com/school/university-of-barcelona/
+  - type: IdentityFederation
+    url: https://www.rediris.es/sir/ubidp
+  - type: ResearchRepository
+    url: https://dataverse.csuc.cat/dataverse/UB
+  - type: LibraryCatalog
+    url: https://cercabib.ub.edu/discovery/search?vid=34CSUC_UB:VU1
   - type: Authentication
     url: https://sso.ub.edu/SAML2/SSOService.php
+  - type: Conformance
+    url: conformance/university-of-barcelona-education-standards.yml
+  - type: DomainSecurity
+    url: security/university-of-barcelona-domain-security.yml
   - type: Plans
     url: plans/university-of-barcelona-plans-pricing.yml
   - type: RateLimits
@@ -115,6 +277,67 @@ common:
     url: review.yml
   - type: JSONLD
     url: json-ld/university-of-barcelona-context.jsonld
+x-coverage:
+  state: covered
+  reason: covered
+  detail: >-
+    Real institution-operated machine-readable surfaces were read directly, not
+    inferred: the UB SAML 2.0 IdP metadata document in RedIRIS SIR / eduGAIN
+    (200, text/xml, shibmd:Scope ub.edu), the Moodle LTI 1.3 JWKS and Advantage
+    token endpoint at campusvirtual.ub.edu (200 / 400-live), and the OAI-PMH 2.0
+    data provider at revistes.ub.edu answering Identify, ListSets (100 sets) and
+    ListMetadataFormats. Three limits qualify the picture and none of them is a
+    reason to call the profile thin. First, the central web estate — www.ub.edu,
+    web.ub.edu and the transparency open-data pages — sits behind a Cloudflare
+    bot challenge returning HTTP 403 with cf-mitigated: challenge to a full
+    browser User-Agent, so the open-data portal could not be read and no
+    OpenData pointer is claimed. Second, the whole diposit.ub.edu host, which
+    carries UB's DSpace 7.6.6 REST API and its OAI-PMH endpoint, returned an
+    Apache 503 maintenance page on every probe across the run; both surfaces are
+    retained and marked degraded rather than deleted, because a 503 is an outage
+    and not a retirement. Third, UB publishes no OpenAPI, AsyncAPI or other
+    machine-readable contract anywhere, so no spec is saved and none was
+    generated. The research-data repository (CSUC Dataverse) and library
+    discovery (Ex Libris Primo VE) are tenancies recorded as relationships, and
+    the Crossref and ROR entries are registry memberships — none of their
+    contracts is credited to UB.
+  generated: '2026-09-01'
+  method: probed
+  evidence:
+    - url: https://www.rediris.es/sir/ubidp
+      status: 200
+    - url: https://campusvirtual.ub.edu/mod/lti/certs.php
+      status: 200
+    - url: https://campusvirtual.ub.edu/mod/lti/token.php
+      status: 400
+    - url: https://campusvirtual.ub.edu/webservice/rest/server.php
+      status: 200
+    - url: https://revistes.ub.edu/index.php/index/oai?verb=Identify
+      status: 200
+    - url: https://revistes.ub.edu/index.php/index/oai?verb=ListSets
+      status: 200
+    - url: https://revistes.ub.edu/index.php/Ausa/api/v1/issues
+      status: 403
+    - url: https://sso.ub.edu/SAML2/SSOService.php
+      status: 200
+    - url: https://api.crossref.org/members/17854
+      status: 200
+    - url: https://api.ror.org/v2/organizations/021018s57
+      status: 200
+    - url: https://cercabib.ub.edu/discovery/search?vid=34CSUC_UB:VU1
+      status: 200
+    - url: https://dataverse.csuc.cat/dataverse/UB
+      status: 200
+    - url: https://www.ub.edu/
+      status: 403
+    - url: https://web.ub.edu/en/web/transparencia/open-data
+      status: 403
+    - url: https://diposit.ub.edu/server/api
+      status: 503
+    - url: https://diposit.ub.edu/server/oai/request?verb=Identify
+      status: 503
+    - url: https://api.datacite.org/clients?query=barcelona
+      status: 200
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
