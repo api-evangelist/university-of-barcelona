@@ -1,0 +1,151 @@
+---
+name: University of Barcelona — Education Regime Domain Standard Conformance
+description: >-
+  Live-probed conformance of University of Barcelona (Universitat de Barcelona)
+  surfaces against the Kin Score `education` regulatory regime standards[]
+  vocabulary. Every hit below is evidenced by a fetched URL and its HTTP status
+  code on the probe date. Standards with no evidence are recorded as not_found
+  rather than omitted, so the absence is legible. Nothing here is inferred from
+  a prose claim on a web page.
+generated: '2026-09-01'
+method: probed
+source: >-
+  Direct HTTP probes of ub.edu-owned hosts, the RedIRIS SIR / eduGAIN metadata
+  aggregate, and the Crossref REST API, run 2026-09-01.
+regime: education
+regime_source: kin-score scoring.yml — education regime standards[]
+standards:
+  - id: lti
+    name: IMS/1EdTech Learning Tools Interoperability 1.3 (LTI Advantage)
+    status: conformant
+    x-operator: institution
+    role: platform
+    detail: >-
+      Campus Virtual UB (Moodle) publishes a live LTI 1.3 tool-platform JWKS and
+      exposes the LTI Advantage OAuth2 client-credentials token endpoint. The
+      token endpoint answers an empty request with a well-formed OAuth2
+      invalid_request error, which confirms the LTI service is enabled rather
+      than merely routed.
+    evidence:
+      - url: https://campusvirtual.ub.edu/mod/lti/certs.php
+        status: 200
+        note: LTI 1.3 platform JWKS — RSA RS256 public key set, kid 185afd2b8e3d988e50f5.
+      - url: https://campusvirtual.ub.edu/mod/lti/token.php
+        status: 400
+        note: 'LTI Advantage token endpoint; returns {"error":"invalid_request"} to an empty request.'
+  - id: saml
+    name: SAML 2.0
+    status: conformant
+    x-operator: federation
+    role: identity-provider
+    detail: >-
+      The University of Barcelona identity provider is published as a signed
+      SAML 2.0 EntityDescriptor through RedIRIS SIR, the Spanish academic
+      identity federation, and is carried into eduGAIN. entityID
+      https://www.rediris.es/sir/ubidp, IDPSSODescriptor with
+      protocolSupportEnumeration urn:oasis:names:tc:SAML:2.0:protocol,
+      mdui:DisplayName "Universitat de Barcelona", registrationAuthority
+      http://www.rediris.es/. UB additionally runs its own SAML2 SSO service
+      endpoint on its own host.
+    evidence:
+      - url: https://www.rediris.es/sir/ubidp
+        status: 200
+        note: >-
+          SAML 2.0 metadata, content-type text/xml, 10,980 bytes, validUntil
+          2026-10-01T02:05:21Z, cacheDuration PT5H.
+      - url: https://sso.ub.edu/SAML2/SSOService.php
+        status: 200
+        note: UB centralized SSO SAML2 SSOService endpoint on the institution's own host.
+  - id: shibboleth
+    name: Shibboleth metadata extensions (urn:mace:shibboleth:metadata:1.0)
+    status: conformant
+    x-operator: federation
+    role: identity-provider
+    detail: >-
+      The UB entity descriptor carries the Shibboleth metadata extension
+      shibmd:Scope asserting the ub.edu attribute scope, which is what makes the
+      IdP usable by Shibboleth service providers across eduGAIN. Confirmed by
+      reading the metadata document, not by a claim about it.
+    evidence:
+      - url: https://www.rediris.es/sir/ubidp
+        status: 200
+        note: '<shibmd:Scope>ub.edu</shibmd:Scope> inside the UB IDPSSODescriptor.'
+  - id: oai-pmh
+    name: OAI-PMH 2.0
+    status: conformant
+    x-operator: institution
+    role: data-provider
+    detail: >-
+      Revistes Científiques de la Universitat de Barcelona answers the OAI-PMH
+      2.0 Identify, ListSets and ListMetadataFormats verbs on the institution's
+      own host, advertising 100 sets and adminEmail revistesub@ub.edu. The
+      Dipòsit Digital OAI-PMH endpoint answered Identify with HTTP 200 on
+      2026-06-03 but its whole host returned 503 throughout the 2026-09-01
+      re-probe, so it is recorded here as degraded rather than as evidence.
+    evidence:
+      - url: https://revistes.ub.edu/index.php/index/oai?verb=Identify
+        status: 200
+        note: >-
+          repositoryName "Revistes Científiques de la Universitat de Barcelona",
+          protocolVersion 2.0, earliestDatestamp 2011-01-13T13:55:12Z.
+      - url: https://revistes.ub.edu/index.php/index/oai?verb=ListSets
+        status: 200
+        note: 100 <set> elements returned.
+      - url: https://revistes.ub.edu/index.php/index/oai?verb=ListMetadataFormats
+        status: 200
+        note: Metadata format list returned.
+      - url: https://diposit.ub.edu/server/oai/request?verb=Identify
+        status: 503
+        note: >-
+          Apache "Service Unavailable" maintenance page on every probe across
+          the run; was HTTP 200 on 2026-06-03. Degraded, not counted as evidence.
+  - id: crossref
+    name: Crossref DOI registration
+    status: conformant
+    x-operator: registry
+    role: member
+    detail: >-
+      The university press, Edicions de la Universitat de Barcelona, is a
+      Crossref member in its own right — member id 17854, DOI prefixes 10.1344
+      and 10.32869, 10,561 registered DOIs at probe time. This is a fact about
+      the institution recorded through the registry's own API; the registry's
+      contract is Crossref's and is not saved here.
+    evidence:
+      - url: https://api.crossref.org/members/17854
+        status: 200
+        note: >-
+          primary-name "Edicions de la Universitat de Barcelona", prefixes
+          ['10.32869', '10.1344'], total-dois 10561.
+      - url: https://www.crossref.org/members/prep/17854
+        status: 200
+        note: Public Crossref member record.
+not_found:
+  - id: datacite
+    detail: >-
+      No DataCite provider or repository client resolves to the University of
+      Barcelona. api.datacite.org/clients and /providers queried for "barcelona",
+      "ub.edu" and "csuc" returned zero matching UB entries. UB research-data
+      DOIs are minted through the CSUC-operated CORA Repositori de Dades de
+      Recerca, so the DataCite client belongs to the consortium, not to UB.
+      Recorded as absent rather than credited.
+    evidence:
+      - url: https://api.datacite.org/clients?query=barcelona
+        status: 200
+        note: '{"data":[],"meta":{"total":0}}'
+  - id: orcid
+    detail: >-
+      No machine-readable evidence of a UB-operated ORCID member integration was
+      found. Spanish ORCID membership runs through FECYT at national level and
+      no institution-scoped endpoint could be probed. Not claimed.
+  - id: scim
+    detail: No SCIM 2.0 provisioning endpoint found on any ub.edu host.
+  - id: oneroster
+    detail: No 1EdTech OneRoster endpoint found. Not typical for a European public university.
+  - id: ed-fi
+    detail: Not applicable — Ed-Fi is a US K-12 data standard.
+  - id: caliper
+    detail: >-
+      No Caliper Analytics endpoint found. Moodle can emit Caliper but nothing is
+      publicly exposed on campusvirtual.ub.edu.
+  - id: qti
+    detail: No QTI content service endpoint found on any ub.edu host.

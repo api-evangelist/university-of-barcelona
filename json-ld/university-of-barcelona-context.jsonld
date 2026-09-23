@@ -4,6 +4,9 @@
     "ub": "https://www.ub.edu/ns/vocab#",
     "dspace": "https://diposit.ub.edu/ns/vocab#",
     "oai": "http://www.openarchives.org/OAI/2.0/",
+    "saml": "urn:oasis:names:tc:SAML:2.0:metadata#",
+    "shibmd": "urn:mace:shibboleth:metadata:1.0#",
+    "lti": "https://purl.imsglobal.org/spec/lti/claim/",
     "xsd": "http://www.w3.org/2001/XMLSchema#",
 
     "Institution": "schema:CollegeOrUniversity",
@@ -11,6 +14,7 @@
     "alternateName": "schema:alternateName",
     "description": "schema:description",
     "url": "schema:url",
+    "identifier": "schema:identifier",
     "foundingDate": {
       "@id": "schema:foundingDate",
       "@type": "xsd:date"
@@ -30,11 +34,35 @@
       "@id": "schema:url",
       "@type": "@id"
     },
+    "operator": "ub:operator",
+    "operatorAxis": "ub:operatorAxis",
+    "probeStatus": "ub:httpProbeStatus",
+    "probeDate": {
+      "@id": "ub:httpProbeDate",
+      "@type": "xsd:date"
+    },
+
+    "IdentityProvider": "saml:IDPSSODescriptor",
+    "entityID": "saml:entityID",
+    "attributeScope": "shibmd:Scope",
+    "registrationAuthority": "saml:registrationAuthority",
+    "federation": "ub:federation",
+
+    "LearningPlatform": "ub:LTIPlatform",
+    "jwksUri": {
+      "@id": "lti:jwks_uri",
+      "@type": "@id"
+    },
+    "tokenEndpoint": {
+      "@id": "lti:token_endpoint",
+      "@type": "@id"
+    },
 
     "DigitalRepository": "dspace:DigitalRepository",
     "dspaceVersion": "dspace:version",
     "repositoryName": "oai:repositoryName",
     "protocolVersion": "oai:protocolVersion",
+    "setCount": "oai:setCount",
     "earliestDatestamp": {
       "@id": "oai:earliestDatestamp",
       "@type": "xsd:dateTime"
@@ -63,40 +91,144 @@
     },
     "metadata": "dspace:metadata",
     "uuid": "dspace:uuid",
-    "handle": "dspace:handle"
+    "handle": "dspace:handle",
+
+    "tenancy": "ub:tenancy",
+    "registryMembership": "ub:registryMembership",
+    "platformOperator": "ub:platformOperator",
+    "memberId": "ub:memberId",
+    "doiPrefix": "ub:doiPrefix"
   },
   "@type": "Institution",
   "name": "University of Barcelona",
   "alternateName": "Universitat de Barcelona",
-  "description": "Public research university founded in 1450 and based in Barcelona, Catalonia, Spain. Operates the Dipòsit Digital institutional repository (DSpace 7.6.6) exposing a public REST/HAL API and an OAI-PMH metadata-harvesting endpoint.",
+  "description": "Public research university founded in 1450 in Barcelona, Catalonia, Spain. Operates no public developer portal and publishes no OpenAPI. Its institution-operated machine-readable surfaces are a SAML 2.0 identity provider federated through RedIRIS SIR into eduGAIN, an LTI 1.3 Advantage tool platform on its self-hosted Moodle, an OAI-PMH 2.0 data provider over its OJS journal platform, and a DSpace 7.6.6 repository that was returning HTTP 503 host-wide on 2026-09-01.",
   "url": "https://www.ub.edu/",
+  "identifier": "https://ror.org/021018s57",
   "foundingDate": "1450",
   "sameAs": [
+    "https://ror.org/021018s57",
+    "https://openalex.org/I71999127",
     "https://www.linkedin.com/school/university-of-barcelona/",
     "https://www.wikidata.org/wiki/Q201492"
   ],
   "schema:owns": [
     {
+      "@type": ["API", "IdentityProvider"],
+      "name": "UB SAML 2.0 Identity Provider (RedIRIS SIR / eduGAIN)",
+      "operatorAxis": "federation",
+      "operator": "Universitat de Barcelona, hosted-IdP service delivered by RedIRIS SIR",
+      "entityID": "https://www.rediris.es/sir/ubidp",
+      "endpointUrl": "https://www.rediris.es/sir/ubidp",
+      "attributeScope": "ub.edu",
+      "registrationAuthority": "http://www.rediris.es/",
+      "federation": "eduGAIN via RedIRIS SIR",
+      "probeStatus": 200,
+      "probeDate": "2026-09-01"
+    },
+    {
+      "@type": ["API", "LearningPlatform"],
+      "name": "Campus Virtual UB (Moodle) — LTI 1.3 Advantage platform",
+      "operatorAxis": "institution",
+      "operator": "Universitat de Barcelona",
+      "endpointUrl": "https://campusvirtual.ub.edu/",
+      "jwksUri": "https://campusvirtual.ub.edu/mod/lti/certs.php",
+      "tokenEndpoint": "https://campusvirtual.ub.edu/mod/lti/token.php",
+      "probeStatus": 200,
+      "probeDate": "2026-09-01"
+    },
+    {
       "@type": "API",
+      "name": "Revistes Científiques de la UB (OJS) — OAI-PMH 2.0",
+      "operatorAxis": "institution",
+      "operator": "Universitat de Barcelona",
+      "endpointUrl": "https://revistes.ub.edu/index.php/index/oai",
+      "documentation": "https://revistes.ub.edu/index.php/index/oai?verb=Identify",
+      "repositoryName": "Revistes Científiques de la Universitat de Barcelona",
+      "protocolVersion": "2.0",
+      "setCount": 100,
+      "earliestDatestamp": "2011-01-13T13:55:12Z",
+      "probeStatus": 200,
+      "probeDate": "2026-09-01"
+    },
+    {
+      "@type": "API",
+      "name": "UB Centralized SSO (Identificació UB, SAML 2.0 / CAS)",
+      "operatorAxis": "institution",
+      "operator": "Universitat de Barcelona",
+      "endpointUrl": "https://sso.ub.edu/SAML2/SSOService.php",
+      "documentation": "https://www.ub.edu/portal/web/iub/detallservei/-/recurs/1051544/autenticacio-centralitzada-sso-",
+      "probeStatus": 200,
+      "probeDate": "2026-09-01"
+    },
+    {
+      "@type": ["API", "DigitalRepository"],
       "name": "Dipòsit Digital REST API (DSpace 7)",
+      "operatorAxis": "institution",
+      "operator": "Universitat de Barcelona",
       "endpointUrl": "https://diposit.ub.edu/server/api",
-      "documentation": "https://diposit.ub.edu/server/api",
       "dspaceVersion": "DSpace 7.6.6",
-      "repositoryName": "Dipòsit Digital de la Universitat de Barcelona"
+      "repositoryName": "Dipòsit Digital de la Universitat de Barcelona",
+      "probeStatus": 503,
+      "probeDate": "2026-09-01"
     },
     {
       "@type": "API",
       "name": "Dipòsit Digital OAI-PMH",
+      "operatorAxis": "institution",
+      "operator": "Universitat de Barcelona",
       "endpointUrl": "https://diposit.ub.edu/server/oai/request",
-      "documentation": "https://diposit.ub.edu/server/oai/request?verb=Identify",
       "protocolVersion": "2.0",
-      "earliestDatestamp": "2006-03-06T12:49:03Z"
+      "earliestDatestamp": "2006-03-06T12:49:03Z",
+      "probeStatus": 503,
+      "probeDate": "2026-09-01"
+    }
+  ],
+  "tenancy": [
+    {
+      "@type": "API",
+      "name": "CORA Repositori de Dades de Recerca — Universitat de Barcelona collection",
+      "operatorAxis": "tenant",
+      "platformOperator": "Consorci de Serveis Universitaris de Catalunya (CSUC), Dataverse 6.10.1",
+      "endpointUrl": "https://dataverse.csuc.cat/dataverse/UB",
+      "identifier": "UB",
+      "probeStatus": 200,
+      "probeDate": "2026-09-01"
     },
     {
       "@type": "API",
-      "name": "UB Centralized SSO (SAML 2.0 / CAS)",
-      "endpointUrl": "https://sso.ub.edu/SAML2/SSOService.php",
-      "documentation": "https://www.ub.edu/portal/web/iub/detallservei/-/recurs/1051544/autenticacio-centralitzada-sso-"
+      "name": "Cercabib — CRAI library discovery",
+      "operatorAxis": "tenant",
+      "platformOperator": "Ex Libris Primo VE, CSUC shared Alma tenancy, view 34CSUC_UB:VU1",
+      "endpointUrl": "https://cercabib.ub.edu/discovery/search?vid=34CSUC_UB:VU1",
+      "probeStatus": 200,
+      "probeDate": "2026-09-01"
     }
-  ]
+  ],
+  "registryMembership": [
+    {
+      "@type": "API",
+      "name": "Crossref membership — Edicions de la Universitat de Barcelona",
+      "operatorAxis": "registry",
+      "platformOperator": "Crossref",
+      "memberId": "17854",
+      "doiPrefix": ["10.1344", "10.32869"],
+      "endpointUrl": "https://api.crossref.org/members/17854",
+      "probeStatus": 200,
+      "probeDate": "2026-09-01"
+    },
+    {
+      "@type": "API",
+      "name": "ROR registration — Universitat de Barcelona",
+      "operatorAxis": "registry",
+      "platformOperator": "Research Organization Registry",
+      "identifier": "https://ror.org/021018s57",
+      "endpointUrl": "https://api.ror.org/v2/organizations/021018s57",
+      "probeStatus": 200,
+      "probeDate": "2026-09-01"
+    }
+  ],
+  "ub:generated": "2026-09-01",
+  "ub:method": "probed",
+  "ub:source": "Live HTTP probes of ub.edu hosts, RedIRIS SIR / eduGAIN metadata, Crossref REST API, ROR API and CSUC Dataverse, run 2026-09-01 under all/0-working/pipeline-university.md"
 }
