@@ -1,4 +1,4 @@
-# University of Barcelona (university-of-barcelona)
+# University of Barcelona
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -64,109 +64,116 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-The University of Barcelona (Universitat de Barcelona, UB) is a public research university founded in 1450 in Barcelona, Catalonia, Spain, ranked #165 in the QS World University Rankings 2025. This repository catalogs UB's publicly verifiable developer/API footprint as an [APIs.json](https://apisjson.org) provider profile for the api-evangelist network.
+The University of Barcelona (Universitat de Barcelona, UB) is a public research university founded in 1450 in Barcelona, Catalonia, Spain, ranked #165 in the QS World University Rankings 2025. UB operates no central developer portal, no public API program and no confirmed organization-wide GitHub account, and its main web estate at www.ub.edu sits behind a Cloudflare bot challenge that returns HTTP 403 to any automated client. What it does operate is a genuine, machine-readable institutional footprint that is easy to miss because none of it is marketed as an API: a SAML 2.0 identity provider published through RedIRIS SIR into eduGAIN with the ub.edu attribute scope; an LTI 1.3 Advantage tool platform on its self-hosted Moodle at campusvirtual.ub.edu, with a live JWKS and token endpoint; an OAI-PMH 2.0 data provider over 100 journal sets at revistes.ub.edu; a DSpace 7.6.6 repository at diposit.ub.edu that was live in June 2026 and returned 503 across every probe on 2026-09-01; and a Crossref membership for the university press. Its research-data repository and library discovery layer are tenancies on consortium and vendor platforms operated by CSUC and Ex Libris, not UB engineering, and are recorded here as relationships rather than as UB contracts.
 
-- APIs.json: https://raw.githubusercontent.com/api-evangelist/university-of-barcelona/refs/heads/main/apis.yml
-- Run it with Naftiko: https://github.com/naftiko/fleet?utm_source=api-evangelist&utm_medium=readme&utm_campaign=university-of-barcelona-api-evangelist&utm_content=repo
+**Areas:** University · Higher Education · Education · Spain · Catalonia · Identity Federation · SAML · Shibboleth · eduGAIN · LTI · LMS · OAI-PMH
 
-## Type
+## University of Barcelona on APIs.io
 
-- university (Public Research University)
-- Index
-- Consumer
-- 3rd-Party
+Everything profiled for University of Barcelona is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/university-of-barcelona/](https://apis.io/providers/university-of-barcelona/)** — or go straight to one of the APIs or properties below.
 
-## Tags
+### APIs (10)
 
-University, Higher Education, Education, Spain, Catalonia, Identity Federation, SAML, Shibboleth, eduGAIN, LTI, Learning Management, OAI-PMH, Repository, DSpace, Research Data, Library, Scholarly, Crossref, Open Access
+- [UB SAML 2.0 Identity Provider (RedIRIS SIR / eduGAIN)](https://apis.io/apis/university-of-barcelona/ub-idp-edugain/) — The University of Barcelona's own SAML 2.0 identity provider, published as a signed EntityDescriptor through RedIRIS SIR — the Spanish academic identity…
+- [Campus Virtual UB (Moodle) — LTI 1.3 Advantage platform and Web Services](https://apis.io/apis/university-of-barcelona/campusvirtual-moodle/) — UB's self-hosted Moodle learning platform on the university's own host. It acts as an LTI 1.3 tool platform: the JWKS at /mod/lti/certs.php serves a live…
+- [Revistes Científiques de la UB (OJS) — OAI-PMH 2.0](https://apis.io/apis/university-of-barcelona/revistes-ojs/) — Open Journal Systems platform self-hosted by UB at revistes.ub.edu, publishing the university's scholarly journals. Its OAI-PMH 2.0 data provider answers…
+- [UB Centralized SSO (Identificació UB, SAML 2.0 / CAS)](https://apis.io/apis/university-of-barcelona/sso-saml/) — Universitat de Barcelona centralized single sign-on providing federated authentication for university web applications, on UB's own host. The SAML2…
+- [Dipòsit Digital REST API (DSpace 7)](https://apis.io/apis/university-of-barcelona/diposit-rest/) — DSpace 7.6.6 REST API for the Dipòsit Digital de la Universitat de Barcelona, UB's institutional repository of teaching, research and institutional output,…
+- [Dipòsit Digital OAI-PMH](https://apis.io/apis/university-of-barcelona/diposit-oai/) — OAI-PMH metadata-harvesting endpoint for the Dipòsit Digital de la Universitat de Barcelona, used for harvesting into national aggregators and the CRAI…
+- [CORA Repositori de Dades de Recerca — Universitat de Barcelona collection](https://apis.io/apis/university-of-barcelona/cora-rdr-ub/) — UB's named research-data collection on CORA RDR, the Dataverse 6.10.1 instance operated by CSUC (Consorci de Serveis Universitaris de Catalunya) for the…
+- [Cercabib — CRAI library discovery (Ex Libris Primo VE, view 34CSUC_UB)](https://apis.io/apis/university-of-barcelona/cercabib-primo/) — The CRAI library discovery layer for UB, delivered on Ex Libris Primo VE under the CSUC shared Alma tenancy. The UB view is 34CSUC_UB:VU1 and it resolves on…
+- [Crossref membership — Edicions de la Universitat de Barcelona (member 17854)](https://apis.io/apis/university-of-barcelona/crossref-member/) — The University of Barcelona press is a Crossref member in its own right: member id 17854, DOI prefixes 10.1344 and 10.32869, 10,561 registered DOIs at probe…
+- [ROR registration — Universitat de Barcelona (021018s57)](https://apis.io/apis/university-of-barcelona/ror-registration/) — The University of Barcelona's entry in the Research Organization Registry. ROR id https://ror.org/021018s57, display name "Universitat de Barcelona",…
 
-## Surfaces, by operator
+### Published properties
 
-Every surface carries an `x-operator` saying **who runs the thing it describes** — which for a
-university is very often not the institution. `institution` means UB's own host and UB's own
-deployment; `federation` means UB's own identity carried in a shared academic federation;
-`tenant` means UB's named account or collection on someone else's platform; `registry` means an
-identifier registry UB is registered in. Vendor contracts are not saved here.
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-### institution
+#### JSON-LD (1)
 
-- **Campus Virtual UB (Moodle) — LTI 1.3 Advantage platform and Web Services** — self-hosted Moodle acting as an LTI 1.3 tool platform. JWKS live at https://campusvirtual.ub.edu/mod/lti/certs.php (200); LTI Advantage token endpoint live at /mod/lti/token.php (400 invalid_request to an empty body); Moodle Web Services REST enabled and token-gated.
-- **Revistes Científiques de la UB (OJS) — OAI-PMH 2.0** — https://revistes.ub.edu/index.php/index/oai (200). Identify, ListSets (100 sets) and ListMetadataFormats all answer. OJS REST API v1 present but key-gated (403).
-- **UB Centralized SSO (Identificació UB)** — https://sso.ub.edu/SAML2/SSOService.php (200); gated to registered institutional applications.
-- **Dipòsit Digital REST API (DSpace 7.6.6)** — https://diposit.ub.edu/server/api — **degraded**: HTTP 503 host-wide on every probe 2026-09-01; was 200 on 2026-06-03.
-- **Dipòsit Digital OAI-PMH** — https://diposit.ub.edu/server/oai/request — **degraded**, same host-wide outage.
+Linked-data contexts for the provider's vocabulary.
 
-### federation
+- [University Of Barcelona Context](https://apis.io/jsonld/university-of-barcelona/university-of-barcelona-context/)
 
-- **UB SAML 2.0 Identity Provider** — entityID `https://www.rediris.es/sir/ubidp`, published as signed metadata through RedIRIS SIR, the Spanish academic identity federation, and carried into eduGAIN. `shibmd:Scope` ub.edu, mdui:DisplayName "Universitat de Barcelona", registrationAuthority http://www.rediris.es/. Live 2026-09-01 (200, text/xml). This is UB's strongest machine-readable surface.
+#### Security (1)
 
-### tenant
+Authentication, trust centre, and vulnerability disclosure.
 
-- **CORA Repositori de Dades de Recerca — UB collection** — https://dataverse.csuc.cat/dataverse/UB. Dataverse 6.10.1 operated by CSUC; the collection (alias UB, contact crai-recerca@ub.edu) is UB's, the API contract is not.
-- **Cercabib — CRAI library discovery** — Ex Libris Primo VE view `34CSUC_UB:VU1` under the CSUC shared Alma tenancy.
+- [University Of Barcelona Domain Security](https://apis.io/security/university-of-barcelona/university-of-barcelona-domain-security/)
 
-### registry
+#### Plans and pricing (1)
 
-- **Crossref member 17854** — Edicions de la Universitat de Barcelona; DOI prefixes 10.1344 and 10.32869; 10,561 DOIs.
-- **ROR 021018s57** — Universitat de Barcelona; resolves to OpenAlex I71999127.
+Published plans, tiers and prices.
 
-## Education regime conformance
+- [University Of Barcelona Plans Pricing](https://apis.io/plans/university-of-barcelona/university-of-barcelona-plans-pricing/)
 
-Probed against the Kin Score `education` regime `standards[]`. Five of twelve evidenced by live
-probe — see [conformance/university-of-barcelona-education-standards.yml](conformance/university-of-barcelona-education-standards.yml).
+#### Rate limits (1)
 
-| Standard | Status | Evidence |
-|---|---|---|
-| `lti` | conformant | Moodle LTI 1.3 JWKS + Advantage token endpoint |
-| `saml` | conformant | Signed SAML 2.0 IdP metadata in RedIRIS SIR / eduGAIN |
-| `shibboleth` | conformant | `shibmd:Scope` ub.edu in the UB entity descriptor |
-| `oai-pmh` | conformant | OJS OAI-PMH 2.0, 100 sets |
-| `crossref` | conformant | Crossref member 17854 |
-| `datacite` | not found | Zero DataCite clients resolve to UB; DOIs mint via CSUC |
-| `orcid`, `scim`, `oneroster`, `ed-fi`, `caliper`, `qti` | not found | No endpoint located |
+Published request limits.
 
-## Plans / Rate Limits / FinOps
+- [University Of Barcelona Rate Limits](https://apis.io/rate-limits/university-of-barcelona/university-of-barcelona-rate-limits/)
 
-- Plans & Pricing: [plans/university-of-barcelona-plans-pricing.yml](plans/university-of-barcelona-plans-pricing.yml)
-- Rate Limits: [rate-limits/university-of-barcelona-rate-limits.yml](rate-limits/university-of-barcelona-rate-limits.yml)
-- FinOps: [finops/university-of-barcelona-finops.yml](finops/university-of-barcelona-finops.yml)
+#### FinOps (1)
 
-## Timestamps
+What the API costs to run, by operation.
 
-- Created: 2026-06-03
-- Modified: 2026-09-01
+- [University Of Barcelona Finops](https://apis.io/finops/university-of-barcelona/university-of-barcelona-finops/)
 
-## Common Properties
+## Where to find this API
 
-- Website: https://www.ub.edu/ (Cloudflare bot challenge — 403 to automated clients)
-- LinkedIn: https://www.linkedin.com/school/university-of-barcelona/
-- IdentityFederation: https://www.rediris.es/sir/ubidp
-- ResearchRepository: https://dataverse.csuc.cat/dataverse/UB
-- LibraryCatalog: https://cercabib.ub.edu/discovery/search?vid=34CSUC_UB:VU1
-- Authentication: https://sso.ub.edu/SAML2/SSOService.php
-- Conformance, DomainSecurity, Plans, RateLimits, FinOps, Review, JSONLD (see files above)
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
 
-## Notes
+- [Website](https://www.ub.edu/)
 
-Re-profiled 2026-09-01 under the API Evangelist university pipeline, which settles operator
-attribution before saving anything. UB publishes **no OpenAPI, AsyncAPI or other machine-readable
-API contract anywhere**, operates no developer portal and no public API program, and has no
-confirmed organization-wide GitHub account. No specification was generated for it and nothing was
-fabricated.
+## API Evangelist rating
 
-Three findings qualify the picture. The central web estate — www.ub.edu, web.ub.edu and the
-transparency open-data pages — sits behind a Cloudflare bot challenge returning HTTP 403 with
-`cf-mitigated: challenge` even to a full browser User-Agent, so the open-data portal could not be
-read and no `OpenData` pointer is claimed. The whole diposit.ub.edu host returned an Apache 503
-maintenance page on every probe across the run, over both HTTP and HTTPS; both DSpace surfaces are
-retained and marked degraded rather than deleted, because a 503 is an outage and not a retirement.
-And CSUC's Dataverse `/api/` paths began 302-redirecting to a CSUC Google Sites landing page under
-request rate — a redirect that reads as a live 200 if followed blindly.
+**Kin Score 16.5** — emerging · rubric 0.24.0 · scored 2026-10-17
 
-What the June 2026 profile missed, and this one records, is that UB's real programmable footprint is
-identity and teaching infrastructure rather than data APIs: a federated SAML 2.0 IdP in eduGAIN, an
-LTI 1.3 Advantage platform, and an OAI-PMH data provider. None of it is marketed as an API.
+| Facet | Score |
+|---|---|
+| Discoverability | 62.5 |
+| Contract quality | 18.0 |
+| Contract governance | 0.0 |
+| Operational transparency | 5.3 |
+| Developer ergonomics | 21.4 |
+| Access clarity | 5.3 |
 
-## Maintainers
+**Agent readiness 3.1** — human-only
 
-- Kin Lane — kin@apievangelist.com
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | — |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | — |
+| OpenAPI Examples | — |
+| Rate Limit Signal | derived (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 16.7** — Education & Research
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/university-of-barcelona/](https://apis.io/providers/university-of-barcelona/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for University of Barcelona: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/university-of-barcelona/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
